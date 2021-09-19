@@ -3,7 +3,7 @@ import Button from "./Button";
 
 class Clock extends React.Component {
 
-    state = {data: new Date(), locale: 'bn-BD'};
+    state = {date: new Date(), abc: 'en-US'};
 
     componentDidMount() {
         this.clockTimer = setInterval(() => this.tick(), 1000);
@@ -15,24 +15,39 @@ class Clock extends React.Component {
 
     tick() {
         this.setState({
-            data: new Date(),
+            date: new Date(),
         })
     }
 
-    handleClick = (locale) => {
+    handleClick = (abc) => {
         this.setState({
-            locale,
+            abc,
         });
     }
 
     render() {
-        console.log('colck component rander');
+        const { date, abc } = this.state;
+        let button;
+
+        if(abc === 'bn-BD'){
+            button =(
+                <Button change={this.handleClick} abc="en-US">Click Hear</Button>
+            );
+
+        }else {
+            button=(
+            <Button change={this.handleClick} abc="bn-BD">Click Hear</Button>
+            );
+        }
+
+
+
         return (
             <div>
                 <h1>
-                    <span>{new Date().toLocaleTimeString(this.state.locale)}</span>
+                    <span>{date.toLocaleTimeString(abc)}</span>
                 </h1>
-                <Button change={this.handleClick.bind(this, 'en-US')}>Click Hear</Button>
+                {button}
             </div>
         );
     }
